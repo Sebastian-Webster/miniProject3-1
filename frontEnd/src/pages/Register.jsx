@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import { Link } from 'react-router-dom';
+import Announcement from "../components/Announcement";
+import Navbar from "../components/Navbar";
 
 const Container = styled.div`
     width: 100vw;
@@ -55,7 +57,9 @@ const Button = styled.button`
 
 const Register = () => {
   return (
+
     <Container>
+        
         <Wrapper>
             <Title>CREATE AN ACCOUNT</Title>
             <Form>
@@ -72,7 +76,7 @@ const Register = () => {
             </Form>
             <Link to="/Login">LOGIN</Link>
             <hr />
-            <Link to="/Home">HOME</Link>
+            <Link to="/">HOME</Link>
         </Wrapper>
     </Container>
   )
