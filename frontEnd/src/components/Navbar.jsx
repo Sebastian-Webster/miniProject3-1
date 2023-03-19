@@ -6,9 +6,9 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import { BrowserRouter,Routes,Route,useNavigate,Link } from 'react-router-dom';
 
-
 const Container = styled.div`
-    height: 80px;
+    height: 80px; 
+
 `;  
 
 const Wrapper = styled.div`
