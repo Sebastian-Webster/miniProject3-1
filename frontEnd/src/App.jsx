@@ -1,8 +1,4 @@
-import { AuthProvider } from 'react-auth-kit'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-// import RouteComponent from './routes';
-
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ProductList from './pages/ProductList';
@@ -11,19 +7,18 @@ import Product from './pages/Product';
 import Cart from './pages/Cart';
 
 const App = () => {
+  const user = true
   return (
-    <AuthProvider authType='cookie' authName='_auth' cookieDomain={window.location.hostname} cookieSecure={window.location.protocol === "https:"}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/productlist" element={<ProductList />} />
-          <Route path="/product" element={<Product />} />
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+        <Route path="/register" element={user ? <Navigate to="/" /> : <Register />} />
+        <Route path="/products/:category" element={<ProductList />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+  </BrowserRouter>
   );
 };
 
