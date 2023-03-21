@@ -7,3 +7,4 @@ frontEnd/.DS_Store
 frontEnd/images/
 frontEnd/node_modules/
  .vscode/
+ node_modules/
