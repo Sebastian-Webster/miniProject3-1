@@ -2,6 +2,8 @@ import { Add, Remove } from "@mui/icons-material";
 import styled from 'styled-components';
 import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
+import {   useParams } from 'react-router-dom';
+import { sliderItems } from './../data';
 
 const Container = styled.div``;  
 
@@ -76,34 +78,43 @@ const Button = styled.button`
     }
 `;
 
-const Product = () => {           
+const Product = () => {    
+    
+    const params = useParams(); 
+    console.log(params.id);
+
+    const getProduct = sliderItems.filter(item => item.id == params.id)
+    console.log("Product ", getProduct)
   return (
     <Container>
         <Announcement/>
         <Navbar/>
         <Wrapper>
-            <ImgContainer>
-                <Image src="https://i.ibb.co/RTmJWHs/IMG-9558.jpg" />
-            </ImgContainer>
-            <InfoContainer>
-                <Title>Heart Ornament</Title>
-                <Desc>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-                iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-                tristique tortor pretium ut. Curabitur elit justo, consequat id
-                condimentum ac, volutpat ornare.
-                </Desc>
-                <Price>$ 5.00</Price>
-                <AddContainer>
-                    <QuantityContainer>
-                    <Remove />
-                    <Quantity>1</Quantity>
-                    <Add />
-                    </QuantityContainer>
-                    <Button>ADD TO CART</Button>
-                </AddContainer>
-            </InfoContainer>
+            {
+                getProduct.length > 0 && (
+                    <>
+                        <ImgContainer>
+                            <Image src={getProduct[0].img} />
+                        </ImgContainer>
+                        <InfoContainer>
+                            <Title>{getProduct[0].title}</Title>
+                            <Desc>
+                             {getProduct[0].desc}
+                            </Desc>
+                            <Price>$ 5.00</Price>
+                            <AddContainer>
+                                <QuantityContainer>
+                                <Remove />
+                                <Quantity>1</Quantity>
+                                <Add />
+                                </QuantityContainer>
+                                <Button>ADD TO CART</Button>
+                            </AddContainer>
+                        </InfoContainer>
+                    </>
+                )
+            }
+            
         </Wrapper>
     </Container>
   )
