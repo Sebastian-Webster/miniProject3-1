@@ -1,7 +1,10 @@
 import { Add, Remove } from "@mui/icons-material";
+import { useLocation } from "react-router";
 import styled from 'styled-components';
 import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
+import { useEffect, useState } from "react";
+import { publicRequest } from "../requestMethods";
 
 const Container = styled.div``;  
 
@@ -76,14 +79,28 @@ const Button = styled.button`
     }
 `;
 
-const Product = () => {           
+const Product = () => {          
+    const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get("/products/find/" + id);
+        setProduct(res.data);
+      } catch {}
+    };
+    getProduct();
+  }, [id]);
+ 
   return (
     <Container>
         <Announcement/>
         <Navbar/>
         <Wrapper>
             <ImgContainer>
-                <Image src="https://i.ibb.co/RTmJWHs/IMG-9558.jpg" />
+                <Image src={product.img} />
             </ImgContainer>
             <InfoContainer>
                 <Title>Heart Ornament</Title>

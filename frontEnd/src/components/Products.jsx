@@ -21,7 +21,7 @@ const Products = ( {cat} ) => {
       const res = await axios.get( 
         cat 
         ? `http://localhost:5000/api/products?category=${cat}` 
-        : "http://localhost:5000/api/products"); //this line will return blank for a moment and needs fixing
+        : "http://localhost:5000/api/products"); //http://localhost:3000/product/undefined
       setProducts(res.data);
     } catch (err) {}
    };
