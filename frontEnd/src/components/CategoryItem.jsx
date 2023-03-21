@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -39,16 +40,18 @@ const Button = styled.button`
     font-weight: 600px;
 `;
 
-const CategoryItem = ({item}) => {
+const CategoryItem = ({ item }) => {
     return (
       <Container>
+        <Link to={`/products/${item.cat}`}>
         <Image src={item.img} />
         <Info>
-            <Title>{item.title}</Title>
-            <Button>SHOP NOW</Button>
+          <Title>{item.title}</Title>
+          <Button>SHOP NOW</Button>
         </Info>
+        </Link>
       </Container>
-    )
+    );
   };
 
 export default CategoryItem

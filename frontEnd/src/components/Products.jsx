@@ -30,7 +30,7 @@ const Products = ( {cat} ) => {
   
   return (
     <Container>
-        {popularProducts.map((item) => (
+        {products.map((item) => (
             <Product item={item} key={item.id} />
         ))}
     </Container>

@@ -27,16 +27,19 @@ export const categories = [
       id: 1,
       img: "https://i.ibb.co/L8m5STv/annie-spratt-c-S4fi-NSK2c4-unsplash.jpg",
       title: "CHRISTMAS",
+      cat: "christmas"
     },
     {
       id: 2,
       img: "https://i.ibb.co/RSFBfbK/Adobe-Stock-231916459-Preview.jpg",
       title: "CROCHET LOVE",
+      cat: "crochet"
     },
     {
       id: 3,
       img: "https://i.ibb.co/DW2t2bc/Screen-Shot-2023-03-18-at-12-56-31-PM.png",
       title: "HOME DECOR",
+      cat: "home decor"
     },
   ];
 
