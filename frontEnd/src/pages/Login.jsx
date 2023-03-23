@@ -1,8 +1,8 @@
-import styled from "styled-components"
-import { Link } from 'react-router-dom';
 import { useState } from "react";
+import styled from "styled-components";
 import { login } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     width: 100vw;
@@ -56,9 +56,6 @@ const Button = styled.button`
       }
 `;
 
-const Error = styled.span`
-  color: red;
-`;
 
 // const Link = styled.a`
 //     margin: 5px 0px;
@@ -69,12 +66,12 @@ const Error = styled.span`
 
 
 const Login = () => {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const dispatch = useDispatch();
-    const {isFetching, error} = useSelector((state) => state.user);
+    const { isFetching, error } = useSelector((state) => state.user);
 
-    const handleClick =  (e) => {
+    const handleClick = (e) => {
         e.preventDefault();
         login(dispatch, { username, password });
     };
@@ -91,10 +88,9 @@ const Login = () => {
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}                
                 />
-                <Button onClick={handleClick} disabled={isFetching}> 
+                 <Button onClick={handleClick} disabled={isFetching}> 
                 LOGIN
                 </Button>
-                {error && <Error>Something went wrong...</Error>}
                 <Link>FORGOT PASSWORD?</Link>
                 <Link>CREATE A NEW ACCOUNT</Link>
                 <Link to="/Register">REGISTER</Link>
@@ -103,7 +99,7 @@ const Login = () => {
         </Wrapper>
     </Container>
    
-  )
+  );
 }
 
 export default Login
