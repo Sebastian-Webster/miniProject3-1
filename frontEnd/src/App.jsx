@@ -8,7 +8,7 @@ import Cart from './pages/Cart';
 import ProductListNoCategory from "./pages/ProductListNoCategory";
 
 const App = () => {
-  const user = true
+  const user = false
   return (
     <BrowserRouter>
       <Routes>

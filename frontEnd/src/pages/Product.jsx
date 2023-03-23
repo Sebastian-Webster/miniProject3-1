@@ -5,6 +5,8 @@ import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div``;  
 
@@ -79,10 +81,12 @@ const Button = styled.button`
     }
 `;
 
-const Product = () => {          
+const Product = () => {
     const location = useLocation();
-  const id = location.pathname.split("/")[2];
-  const [product, setProduct] = useState({});
+    const id = location.pathname.split("/")[2];
+    const [product, setProduct] = useState({});
+    const [quantity, setQuantity] = useState(1);
+    const dispatch = useDispatch();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -93,6 +97,19 @@ const Product = () => {
     };
     getProduct();
   }, [id]);
+
+  const handleQuantity = (type) => {
+    if(type === "dec"){
+        quantity>1 && setQuantity(quantity - 1);
+    } else {
+        setQuantity(quantity + 1);
+    }
+  };
+
+  const handleClick = () => {
+    //UPDATE CART
+    dispatch(addProduct({ ...product, quantity })); //product quantity NOT cart
+  };
  
   return (
     <Container>
@@ -110,11 +127,11 @@ const Product = () => {
                 <Price>$ {product.price}</Price>
                 <AddContainer>
                     <QuantityContainer>
-                    <Remove />
-                    <Quantity>1</Quantity>
-                    <Add />
+                    <Remove onClick={() => handleQuantity("dec")} />
+                    <Quantity>{quantity}</Quantity>
+                    <Add onClick={() => handleQuantity("inc")}/>
                     </QuantityContainer>
-                    <Button>ADD TO CART</Button>
+                    <Button onClick={handleClick} >ADD TO CART</Button>
                 </AddContainer>
             </InfoContainer>
         </Wrapper>

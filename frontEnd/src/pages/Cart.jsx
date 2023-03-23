@@ -1,4 +1,5 @@
 import { Add, Remove } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
@@ -134,92 +135,90 @@ const Button = styled.button`
     font-weight: 600;
 `;
 
-
-
 const Cart = () => {
-  return (
-    <Container>
-        <Announcement />
-        <Navbar />
-        <Wrapper>
-            <Title>Your Bag</Title>
-            <Top>
-                <TopButton>CONTINUE SHOPPING</TopButton>
-                <TopTexts>
-                    <TopText>Shopping Bag (2)</TopText>
-                    <TopText>Your Wishlist (0)</TopText>
-                </TopTexts>
-                <TopButton type="filled">CHECKOUT</TopButton>
-            </Top>
-            <Bottom>
-                <Info>
-                    <Product>
-                        <ProductDetail>
-                            <Image src="https://i.ibb.co/RTmJWHs/IMG-9558.jpg"/>
-                            <Details>
-                                <ProductName><b>Product:</b>Heart Ornament</ProductName>
-                                <ProductId><b>ID:</b> 98473847</ProductId>
-                            </Details>
-                        </ProductDetail>
-                        <PriceDetail>
-                            <ProductQuantityContainer>
-                                <Add/>
-                                <ProductQuantity>2</ProductQuantity>
-                                <Remove/>
-                            </ProductQuantityContainer>
-                            <ProductPrice>$ 10.00</ProductPrice>
-                        </PriceDetail>
-                    </Product>
-                    
-                    <Hr/>
+    const cart = useSelector(state => state.cart)
+    return (
+        <Container>
+            <Announcement />
+            <Navbar />
+            <Wrapper>
+                <Title>Your Bag</Title>
+                <Top>
+                    <TopButton>CONTINUE SHOPPING</TopButton>
+                    <TopTexts>
+                        <TopText>Shopping Bag (2)</TopText>
+                        <TopText>Your Wishlist (0)</TopText>
+                    </TopTexts>
+                    <TopButton type="filled">CHECKOUT</TopButton>
+                </Top>
+                <Bottom>
+                    <Info>
+                        {cart.products.map((product) => ( 
+                        <Product>
+                            <ProductDetail>
+                                <Image src={product.img} />
+                                <Details>
+                                    <ProductName>
+                                        <b>Product:</b> {product.title} 
+                                    </ProductName>
+                                    <ProductId>
+                                        <b>ID:</b> {product._id} 
+                                    </ProductId>
+                                </Details>
+                            </ProductDetail>
+                            <PriceDetail>
+                                <ProductQuantityContainer>
+                                    <Add/>
+                                    <ProductQuantity> 
+                                        {product.quantity} 
+                                    </ProductQuantity>
+                                    <Remove/>
+                                </ProductQuantityContainer>
+                                <ProductPrice>
+                                    $ {product.price*product.quantity} 
+                                </ProductPrice>
+                            </PriceDetail>
+                        </Product> 
+                        ))}
 
-                    <Product>
-                        <ProductDetail>
-                            <Image src="https://i.ibb.co/nDsGNby/Adobe-Stock-176693255-Preview.jpg"/>
-                            <Details>
-                                <ProductName><b>Product:</b>Tree Ornament</ProductName>
-                                <ProductId><b>ID:</b> 984dfs</ProductId>
-                            </Details>
-                        </ProductDetail>
-                        <PriceDetail>
-                            <ProductQuantityContainer>
-                                <Add/>
-                                <ProductQuantity>1</ProductQuantity>
-                                <Remove/>
-                            </ProductQuantityContainer>
-                            <ProductPrice>$ 5.00</ProductPrice>
-                        </PriceDetail>
-                    </Product>
+                        <Hr/>
+                    </Info>
+                    <Summary>
+                        <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+                        <SummaryItem>
+                            <SummaryItemText>Subtotal</SummaryItemText>
+                            <SummaryItemPrice>
+                                $ {cart.total}
+                            </SummaryItemPrice>
+                        </SummaryItem>
 
-                </Info>
-                <Summary>
-                    <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-                    <SummaryItem>
-                        <SummaryItemText>Subtotal</SummaryItemText>
-                        <SummaryItemPrice>$ 15.00</SummaryItemPrice>
-                    </SummaryItem>
+                        <SummaryItem>
+                            <SummaryItemText>Estimated Shipping</SummaryItemText>
+                            <SummaryItemPrice>
+                                $ 15.00
+                            </SummaryItemPrice>
+                        </SummaryItem>
 
-                    <SummaryItem>
-                        <SummaryItemText>Estimated Shipping</SummaryItemText>
-                        <SummaryItemPrice>$ 15.00</SummaryItemPrice>
-                    </SummaryItem>
+                        <SummaryItem>
+                            <SummaryItemText>Shipping Discount</SummaryItemText>
+                            <SummaryItemPrice>
+                            $ -15.00
+                            </SummaryItemPrice>
+                        </SummaryItem>
 
-                    <SummaryItem>
-                        <SummaryItemText>Shipping Discount</SummaryItemText>
-                        <SummaryItemPrice>$ -15.00</SummaryItemPrice>
-                    </SummaryItem>
+                        <SummaryItem type="total">
+                            <SummaryItemText>Total</SummaryItemText>
+                            <SummaryItemPrice>
+                            $ {cart.total}
+                            </SummaryItemPrice>
+                        </SummaryItem>
+                        <Button>CHECKOUT</Button>
+                    </Summary>
 
-                    <SummaryItem type="total">
-                        <SummaryItemText>Total</SummaryItemText>
-                        <SummaryItemPrice>$ 15.00</SummaryItemPrice>
-                    </SummaryItem>
-                    <Button>CHECKOUT</Button>
-                </Summary>
-
-            </Bottom>
-        </Wrapper>
-    </Container> 
-  )
+                </Bottom>
+            </Wrapper>
+        </Container> 
+    )
 }
 
 export default Cart
