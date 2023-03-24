@@ -18,6 +18,7 @@ router.post("/register", async (req, res) => {
         const savedUser = await newUser.save(); 
         res.status(201).json(savedUser);
     } catch (err) {
+        console.error('An error occured:', err)
         res.status(500).json(err);
     }
 });
@@ -27,7 +28,10 @@ router.post("/register", async (req, res) => {
 router.post("/login", async(req,res) => {
     try {
         const user = await User.findOne({username: req.body.username});
-        !user && res.status(401).json("Wrong Credentials!");
+
+        if (!user) {
+            return res.status(401).json("Wrong Credentials!")
+        }
         
         const hashedPassword = CryptoJS.AES.decrypt(
             user.password, 
@@ -36,8 +40,9 @@ router.post("/login", async(req,res) => {
 
         const Originalpassword = hashedPassword.toString(CryptoJS.enc.Utf8);
 
-        Originalpassword !== req.body.password &&
-        res.status(401).json("Wrong Credentials!");
+        if (Originalpassword !== req.body.password) {
+            return res.status(401).json("Wrong Credentials!")
+        }
 
         const accessToken = jwt.sign(
             {
@@ -51,7 +56,8 @@ router.post("/login", async(req,res) => {
 
         res.status(200).json( {...others, accessToken} );
     } catch(err) {
-    res.status(500).json(err);
+        console.error('An error occured:', err)
+        res.status(500).json(err);
     }
 });
 

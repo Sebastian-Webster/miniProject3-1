@@ -2,7 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import { login } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { loginFailure } from "../redux/userRedux";
 
 const Container = styled.div`
     width: 100vw;
@@ -72,19 +73,22 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
-    const { isFetching, error } = useSelector((state) => state.user);
+    const { isFetching, error, currentUser } = useSelector((state) => state.user);
 
     const handleClick = (e) => {
         e.preventDefault();
         if (username.trim() === "" || password.trim() === "") {
-            dispatch({ type: "LOGIN_FAILURE", payload: "Username and Password must not be blank or incorrect" });
-            error = "Username and Password must not be blank or incorrect"
+            dispatch(loginFailure("Username and Password must not be blank or incorrect"));
         } else {
             login(dispatch, { username, password });
         }
     };
     
 
+    if (currentUser) {
+        return <Navigate to="/"/>
+    }
+    
   return (
     <Container>
         <Wrapper>
@@ -100,14 +104,6 @@ const Login = () => {
                  <Button onClick={handleClick} disabled={isFetching}> 
                 LOGIN
                 </Button>
-                {/* 
-                Issues:
-                1. Log-in is successful but won't route to home page
-                2. backEnd show this error if username and password is incorrect
-                    Node.js v19.4.0
-                    [nodemon] app crashed - waiting for file changes before starting...
-                3. If username and password are blank the error message below is not showing
-                 */}
                 {
                     error && <Error>{error}</Error>
                 }
