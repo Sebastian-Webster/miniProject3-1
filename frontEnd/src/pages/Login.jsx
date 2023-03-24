@@ -56,6 +56,9 @@ const Button = styled.button`
       }
 `;
 
+const Error = styled.span`
+  color: red;
+`;
 
 // const Link = styled.a`
 //     margin: 5px 0px;
@@ -73,8 +76,14 @@ const Login = () => {
 
     const handleClick = (e) => {
         e.preventDefault();
-        login(dispatch, { username, password });
+        if (username.trim() === "" || password.trim() === "") {
+            dispatch({ type: "LOGIN_FAILURE", payload: "Username and Password must not be blank or incorrect" });
+            error = "Username and Password must not be blank or incorrect"
+        } else {
+            login(dispatch, { username, password });
+        }
     };
+    
 
   return (
     <Container>
@@ -91,6 +100,17 @@ const Login = () => {
                  <Button onClick={handleClick} disabled={isFetching}> 
                 LOGIN
                 </Button>
+                {/* 
+                Issues:
+                1. Log-in is successful but won't route to home page
+                2. backEnd show this error if username and password is incorrect
+                    Node.js v19.4.0
+                    [nodemon] app crashed - waiting for file changes before starting...
+                3. If username and password are blank the error message below is not showing
+                 */}
+                {
+                    error && <Error>{error}</Error>
+                }
                 <Link>FORGOT PASSWORD?</Link>
                 <Link>CREATE A NEW ACCOUNT</Link>
                 <Link to="/Register">REGISTER</Link>

@@ -13,7 +13,6 @@ const Container = styled.div`
 `;
 
 const Products = ( {cat} ) => {
-  console.log(cat);
   const [products, setProducts] = useState([]);
   useEffect (() => {
    const getProducts = async () => {
